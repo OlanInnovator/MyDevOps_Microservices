@@ -5,15 +5,28 @@
 # app.py should pass pylint
 # (Optional) Build a simple integration test
 
+
 setup:
 	# Create python virtualenv & source it
 	# source ~/.devops/bin/activate
-	python3 -m venv ~/.devops
+	python3.7 -m venv ~/.devops
+	source ~/.devops/bin/activate
+
+env:
+	#Show information about environment
+	which python3
+	python3 --version
+	which pytest
+	which pylint
 
 install:
 	# This should be run from inside a virtualenv
 	pip install --upgrade pip &&\
 		pip install -r requirements.txt
+	sudo wget -O /bin/hadolint https://github.com/hadolint/hadolint/releases/download/v1.16.3/hadolint-Linux-x86_64 #&&\
+	#chmod +x /bin/hadolint
+	docker run --rm -i hadolint/hadolint < Dockerfile
+	
 
 test:
 	# Additional, optional, tests could go here
